@@ -1,16 +1,9 @@
-import { Box } from "@mui/material";
 import { FC } from "react";
+import { Outlet } from "react-router";
 
 const Content: FC = () => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%"
-      }}
-    >
-       content
-    </Box>
+    <Outlet />
   )
 };
 export default Content;
