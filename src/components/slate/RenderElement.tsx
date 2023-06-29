@@ -1,8 +1,15 @@
-import { RenderElementProps } from "slate-react";
+import { RenderElementProps, useSlate } from "slate-react";
+import { CustomEditor } from "../../core/models/CustomEditor";
 
-const Element = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
-  return (
-    <div>render</div>
-  )
+export const Element = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
+  const editor: CustomEditor = useSlate();
+  switch (element.type) {
+    default: {
+      return (
+        <p {...attributes}>
+          {children}
+        </p>
+      )
+    }
+  }
 };
-export default Element;

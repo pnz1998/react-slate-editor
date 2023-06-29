@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 import { FC } from "react";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import { useNavigate } from "react-router-dom";
 
 const ContentHeader: FC = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -19,8 +21,9 @@ const ContentHeader: FC = () => {
         variant="contained" 
         startIcon={<AddOutlinedIcon sx={{ color: "#fff" }}/>}
         sx={{ height: "40px" }}
+        onClick={()=> navigate("/editor")}
       >
-        添加模板
+        制作模板
       </Button>
     </Box>
   )

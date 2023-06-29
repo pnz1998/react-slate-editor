@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
 import Router from './pages/Router';
+import Providers from './core/providers/Providers';
 
 function App() {
   return (
     <div className="App">
-      <Router />
+      <Providers>
+        <Router />
+      </Providers>
     </div>
   );
 }
