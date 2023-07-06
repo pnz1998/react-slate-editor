@@ -19,7 +19,7 @@ const SlateEditor: FC = () => {
           display: 'block',
           margin: '0 auto',
           marginBottom: '0.5cm',
-          boxShadow: '0 0 0.5cm rgba(0,0,0,0.5)',
+          boxShadow: '0 0 0.1cm rgba(0,0,0,0.1)',
           padding: '10px',
         }}
         renderElement={renderElement}

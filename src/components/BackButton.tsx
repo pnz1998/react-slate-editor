@@ -28,7 +28,7 @@ const BackButton: FC = () => {
           marginRight: "10px"
         }}
       />
-      返回上一页
+      返回
     </Box>
   )
 };
