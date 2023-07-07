@@ -1,7 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { Editor } from "slate";
-import { RenderElementProps, useSlate } from "slate-react";
+import { ReactEditor, RenderElementProps, useSlate } from "slate-react";
 import { css } from '@emotion/react';
+import Table from "./Table/components/Table";
+import TableRow from "./Table/components/TableRow";
+import TableCell from "./Table/components/TableCell";
 
 export const Element = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
   const editor: Editor = useSlate();
@@ -36,6 +39,24 @@ export const Element = ({ attributes, children, element }: RenderElementProps): 
         >
           {children}
         </ol>
+      )
+    case 'table':
+      return (
+        <Table attributes={attributes}>
+          {children}
+        </Table>
+      )
+    case 'tr':
+      return (
+        <TableRow attributes={attributes}>
+          {children}
+        </TableRow>
+      )
+    case 'td':
+      return (
+        <TableCell attributes={attributes} element={element} colIndex={ReactEditor.findPath(editor as any, element)[2]}>
+          {children}
+        </TableCell>
       )
     default: {
       return (

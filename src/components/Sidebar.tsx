@@ -1,6 +1,5 @@
 import { FC, ReactElement } from "react";
-import { Box, ListItemButton, ListItemText } from "@mui/material";
-import { SidebarList, SidebarListItemIcon } from "./styledComponents/SidebarList";
+import { Box, List, ListItemButton, ListItemIcon, ListItemIconProps, ListItemText, ListProps } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 
@@ -8,6 +7,27 @@ interface SideListType {
   icon: ReactElement,
   label: string
 };
+
+const SidebarList = (props: ListProps) => (
+  <List
+    component="nav"
+    sx={{
+      padding: 0,
+    }}
+  >
+    {props.children}
+  </List>
+);
+
+const SidebarListItemIcon = (props: ListItemIconProps) => (
+  <ListItemIcon
+    sx={{
+      minWidth: "40px"
+    }}
+  >
+    {props.children}
+  </ListItemIcon>
+);
 
 const Sidebar: FC = () => {
   const SideList: SideListType[] = [

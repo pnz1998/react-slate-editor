@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { Element } from "slate";
 
 export interface ToolbarButtonModel {
   format: string,
