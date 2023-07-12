@@ -1,16 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Tooltip from "@mui/material/Tooltip";
-import { FC, useState } from "react";
+import { FC, useContext } from "react";
 import { Editor } from "slate";
 import { useSlate } from "slate-react";
 import { HighlightColorModel } from "../../core/models/EditorModels";
 import { ArrowDropDown } from "../Icons";
 import { FONTCOLORLIST } from "../../core/utils/fontConstant";
+import { ToolbarStateContextType, ToolbarStateContext } from "../../core/providers/ToolbarStateProvider";
 
 const HighlightColor: FC<HighlightColorModel> = ({ tooltip }) => {
   const editor: Editor = useSlate();
-  const [ visible, setVisible ] = useState<boolean>(false);
+  const { toolbarState, updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
   const highlightActive = (editor: Editor) => {
     const marks: any = Editor.marks(editor);
     if(!marks) return
@@ -46,7 +47,7 @@ const HighlightColor: FC<HighlightColorModel> = ({ tooltip }) => {
             `}
             onMouseDown={event => {
               event.preventDefault();
-              setVisible(!visible);
+              updateToolbarState({ fontSize: false, color: false, highlight: !toolbarState.highlight, elementList: false });
             }}
           >
             <div
@@ -77,7 +78,7 @@ const HighlightColor: FC<HighlightColorModel> = ({ tooltip }) => {
           position: absolute;
           right: -80px;
           display: ${
-            visible? 'block':'none'
+            toolbarState.highlight? 'block':'none'
           };
           background: #fff;
           width: 203px;
@@ -121,8 +122,8 @@ const HighlightColor: FC<HighlightColorModel> = ({ tooltip }) => {
                 key={index}
                 onMouseDown={event => {
                   event.preventDefault();
-                  setVisible(false);
                   Editor.addMark(editor, 'highlight', item);
+                  updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
                 }}
               ></span>
             )

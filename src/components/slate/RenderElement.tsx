@@ -6,7 +6,7 @@ import Table from "./Table/components/Table";
 import TableRow from "./Table/components/TableRow";
 import TableCell from "./Table/components/TableCell";
 
-export const Element = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
+export const SlateElement = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
   const editor: Editor = useSlate();
   const style = { textAlign: element.align };
   switch (element.type) {

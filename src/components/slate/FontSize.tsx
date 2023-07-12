@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Tooltip from "@mui/material/Tooltip";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Editor } from "slate";
 import { useSlate } from "slate-react";
-import { useState } from 'react';
 import { FontSizeModel } from "../../core/models/EditorModels";
 import { ArrowDropDown } from "../Icons";
 import { FONTSIZELIST } from "../../core/utils/fontConstant";
+import { ToolbarStateContext, ToolbarStateContextType } from "../../core/providers/ToolbarStateProvider";
 
 const FontSize: FC<FontSizeModel> = ({ tooltip }) => {
   const editor: Editor = useSlate();
-  const [ visible, setVisible ] = useState<boolean>(false);
+  const { toolbarState, updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
   const fontSizeActive = (editor: Editor) => {
     const marks: any = Editor.marks(editor);
     if(!marks) return
@@ -48,7 +48,7 @@ const FontSize: FC<FontSizeModel> = ({ tooltip }) => {
             `}
             onMouseDown={event => {
               event.preventDefault();
-              setVisible(!visible);
+              updateToolbarState({ fontSize: !toolbarState.fontSize, color: false, highlight: false, elementList: false });
             }}
           >
             <div
@@ -75,7 +75,7 @@ const FontSize: FC<FontSizeModel> = ({ tooltip }) => {
           z-index: 1;
           position: absolute;
           display: ${
-            visible? 'block':'none'
+            toolbarState.fontSize? 'block':'none'
           };
           background: #fff;
           width: 68px;
@@ -118,7 +118,7 @@ const FontSize: FC<FontSizeModel> = ({ tooltip }) => {
                 key={index}
                 onMouseDown={event => {
                   event.preventDefault();
-                  setVisible(false);
+                  updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
                   Editor.addMark(editor, 'fontSize', item);
                 }}
               >

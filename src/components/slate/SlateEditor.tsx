@@ -1,16 +1,42 @@
-import { FC, useCallback } from "react";
-import { Editable } from "slate-react";
-import { Element } from "./RenderElement";
+import { FC, useCallback, useContext } from "react";
+import { Editable, useSlate } from "slate-react";
+import { SlateElement } from "./RenderElement";
 import { Leaf } from "./RenderLeaf";
-import Toolbar from "./Toolbar";
+import { Box } from "@mui/material";
+import { Editor, Element } from "slate";
+import { getCurrentNode } from "./functions/getCurrentNode";
+import { ElementInfoContext, ElementInfoContextType } from "../../core/providers/ElementInfoProvider";
 
 const SlateEditor: FC = () => {
-  const renderElement = useCallback((props: any) => <Element {...props} />, []);
+  const renderElement = useCallback((props: any) => <SlateElement {...props} />, []);
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
-
+  const editor: Editor = useSlate();
+  const { updateElementInfoState } = useContext<ElementInfoContextType>(ElementInfoContext);
   return (
-    <>
-      <Toolbar/>
+    <Box
+      sx={{
+        flex: 1,
+        overflowY: "auto",
+        '&::-webkit-scrollbar': {
+          width: "10px",
+          height: "10px"
+        },
+        '&::-webkit-scrollbar-track': {
+          background: "rgb(239, 239, 239)",
+          borderRadius: "2px"
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: "#bfbfbf",
+          borderRadius: "10px"
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: "rgb(184, 184, 184)"
+        },
+        '&::-webkit-scrollbar-corner': {
+          background: "#fff"
+        }
+      }}
+    >
       <Editable
         style={{
           background: 'white',
@@ -26,8 +52,14 @@ const SlateEditor: FC = () => {
         renderLeaf={renderLeaf}
         autoFocus
         spellCheck
+        onClick={e => {
+          const selection = editor.selection;
+          const node = getCurrentNode(editor, selection?.anchor.path?? []) as any as Element;
+          console.log(node)
+          updateElementInfoState(node);
+        }}
       />
-    </>
+    </Box>
   )
 };
 export default SlateEditor;

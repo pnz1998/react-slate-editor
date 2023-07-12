@@ -10,6 +10,7 @@ import { useSlate } from "slate-react";
 import { Editor } from "slate";
 import { TableStateContext } from "../../../../core/providers/TableStateProvider";
 import { insertTable } from "../transforms/insertTable";
+import { ToolbarStateContext, ToolbarStateContextType } from "../../../../core/providers/ToolbarStateProvider";
 
 interface ConfigTableDialogModel {
   open: boolean;
@@ -28,6 +29,7 @@ const ConfigTableDialog: FC<ConfigTableDialogModel> = ({
   const editor: Editor = useSlate();
   const [ tableRowsAndColumns, setTableRowsAndColumns ] = useState<tableRowsAndColumnsModel>({ rowCount: 4, colCount: 4 });
   const { tableState, updateTableState } = useContext(TableStateContext);
+  const { updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
 
   const cancelCreateTable = () => {
     onClose();
@@ -45,6 +47,7 @@ const ConfigTableDialog: FC<ConfigTableDialogModel> = ({
     };
     insertTable(insertProps);
     // MyEditor.insertNodeEnd(editor);
+    updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
     onClose();
   };
   return (

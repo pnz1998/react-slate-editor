@@ -60,8 +60,8 @@ export type CustomElement = ParagraphElement | HeadingElement | TableElement | T
 
 declare module 'slate' {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor
-    Element: CustomElement
-    Text: CustomText
+    Editor: BaseEditor & ReactEditor;
+    Element: CustomElement;
+    Text: CustomText;
   }
 }
